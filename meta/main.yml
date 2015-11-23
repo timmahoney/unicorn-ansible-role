@@ -1,0 +1,9 @@
+---
+galaxy_info:
+  author: Tim Mahoney
+  description: Provision the Unicorn Web Server with Ansible
+  company: OpsArray
+  license: GPLv2
+  min_ansible_version: 1.2
+dependencies: []
+  
