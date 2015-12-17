@@ -1,2 +1,12 @@
 ---
 # defaults file for unicorn
+
+unicorn:
+  gems_install:
+  - unicorn
+  - sinatra-reloader
+  user: vagrant
+  group: vagrant
+  log_directory: /var/log/unicorn/
+  pid_directory: /var/run/unicorn/pids/
+  socket_directory: /var/run/unicorn/sockets/

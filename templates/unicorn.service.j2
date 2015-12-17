@@ -1,0 +1,15 @@
+[Unit]
+Description=Sinatra Unicorn server
+
+[Service]
+Type=simple
+SyslogIdentifier=sinatra-unicorn
+User=vagrant
+PIDFile=/var/run/unicorn/pids/unicorn.pid
+WorkingDirectory=/var/www/html/production
+ExecStart=/home/vagrant/.rvm/bin/sinatra_unicorn -c /var/www/html/production/config/unicorn.rb -D
+ExecReload=/bin/kill -s USR2 $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+[Install]
+WantedBy=multi-user.target

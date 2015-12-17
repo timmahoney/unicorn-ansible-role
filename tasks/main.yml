@@ -1,2 +1,33 @@
 ---
 # tasks file for unicorn
+
+- name: Install Required Gems
+  become: yes
+  tags: unicorn
+  shell: su - -c "gem install {{ item }}"
+  with_items: unicorn.gems_install
+
+- name: Create the Log directory
+  become: yes
+  tags: unicorn
+  file: path={{ unicorn.log_directory }} state=directory owner={{ unicorn.user }} group={{ unicorn.group }} mode=0755
+
+- name: Create the PID directory
+  become: yes
+  tags: unicorn
+  file: path={{ unicorn.pid_directory }} state=directory owner={{ unicorn.user }} group={{ unicorn.group }} mode=0755
+
+- name: Create the Socket directory
+  become: yes
+  tags: unicorn
+  file: path={{ unicorn.socket_directory }} state=directory owner={{ unicorn.user }} group={{ unicorn.group }} mode=0755
+
+- name: Create an RVM Wrapper for unicorn
+  tags: unicorn
+  shell: rvm wrapper {{ item }} sinatra unicorn
+  with_items: rvm1_rubies
+
+- name: Provision a Unicorn SystemD script
+  become: yes
+  tags: unicorn
+  template: src=unicorn.service.j2 dest=/etc/systemd/system/unicorn.service
